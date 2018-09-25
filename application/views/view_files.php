@@ -120,12 +120,21 @@ $dados = $this->session->userdata();  ?>
             </div>
         </div>
         <div class="row">
-            <?php if(!empty($files)): foreach($files as $file): ?>
+            <?php if(!empty($files)): foreach($files as $file): 
+               // var_dump($file);
+                ?>
             <div class="col-md-3">
 
-                <embed src="<?php echo base_url('upload/'.$file['file_name']); ?>" width="100%" height="180"/>
+                <embed src="<?php
+$formatos = ['txt', 'jpg', 'jpeg', 'png', 'gif'];
+if(in_array(pathinfo($file['file_name'],PATHINFO_EXTENSION), $formatos)) {
+echo base_url('upload/'.$file['file_name']);
+}else {
+echo base_url('upload/rar.jpg');
+}
+?>" width="100%" height="180"/>
                 <div class="btn-group btn-group-justified" role="group">
-                    <a href="<?php echo site_url('download/index/'.$file['id']) ?>" class="btn btn-success">Download</a>
+                    <a href="<?php echo base_url('upload/'.$file['file_name']); ?>" class="btn btn-success" download>Download</a>
                     <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#my-<?php echo $file['id'] ?>">Visualizar</a>
                 </div>
                 <p><strong> <?php echo $file['file_name'] ?> </strong></p>
